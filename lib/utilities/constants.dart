@@ -18,4 +18,16 @@ class AppConstants {
   //DefaultValues
   static const defaultContainerHeight = 50.0;
   static const defaultContainerWidth = 50.0;
+
+  //Images
+  static const logo = "assets/images/logo.png";
+
+  //Lists
+  static const categoryList = ["Financial Notes", "Personal Notes", "Shopping Notes"];
+  static const categoryListAll = [
+    "All Notes",
+    "Financial Notes", "Personal Notes", "Shopping Notes"
+  ];
 }
+
+

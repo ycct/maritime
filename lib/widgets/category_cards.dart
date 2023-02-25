@@ -18,7 +18,7 @@ class CategoryCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           50,
         ),
-        color: isSelected ? Colors.blue : Colors.blue.withOpacity(0.5),
+        color: isSelected ? Colors.blue.shade100 : Colors.orange.shade100,
       ),
       child: Center(
         child: Padding(
@@ -26,8 +26,8 @@ class CategoryCards extends StatelessWidget {
           child: Text(
             title,
             style: TextStyle(
-              fontSize: 18,
-              color: isSelected ? Colors.white : Colors.blue,
+              fontSize: 14,
+              color: isSelected ? Colors.white : Colors.black,
             ),
           ),
         ),

@@ -1,36 +1,44 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:maritime/models/note_model.dart';
 import 'package:maritime/utilities/boxes.dart';
+import 'package:maritime/utilities/constants.dart';
 
 enum CategoryEnum { finance, personal, shopping }
 
 class HomeController extends GetxController {
   int selectedIndex = 0;
+
   TextEditingController noteCont = TextEditingController();
   TextEditingController titleCont = TextEditingController();
   TextEditingController imageCont = TextEditingController();
+
+  Box<Note>? box;
+
   List<Note> noteListAll = [];
   List<List<Note>> bigData = [];
   List<Note> noteListFinance = [];
   List<Note> noteListPersonal = [];
   List<Note> noteListShopping = [];
-  List<String> categoryList = ["Finans", "Kişisel", "Alışveriş Listesi"];
-  List<String> categoryListAll = [
-    "Tümü",
-    "Finans",
-    "Kişisel",
-    "Alışveriş Listesi"
-  ];
+
+  @override
+  onInit() {
+    super.onInit();
+    box = Boxes.getNotes();
+    noteListAll = box!.values.toList();
+    categorizeList();
+  }
 
   saveNoteToAll() {
-    Note note = Note();
-    note = note
-      ..category = categoryList[selectedIndex]
+    Note note = Note()
+      ..category = AppConstants.categoryList[selectedIndex]
       ..note = noteCont.text
+      ..image = ""
       ..title = titleCont.text;
-    noteListAll.add(note);
     bigData[selectedIndex].add(note);
+    noteListAll.add(note);
+    addNotestoLocalDb(note);
     update();
   }
 
@@ -38,20 +46,19 @@ class HomeController extends GetxController {
     bigData = [noteListFinance, noteListPersonal, noteListShopping];
   }
 
-  clearFields() {
-    titleCont.clear();
-    noteCont.clear();
-    update();
+  categorizeList() {
+    for (var element in noteListAll) {
+      if (element.category == AppConstants.categoryList[0]) {
+        noteListFinance.add(element);
+      } else if (element.category == AppConstants.categoryList[1]) {
+        noteListPersonal.add(element);
+      } else {
+        noteListShopping.add(element);
+      }
+    }
   }
 
-  saveNoteToAll2() {
-    noteListAll.add(
-      Note(
-        title: titleCont.text,
-        note: noteCont.text,
-        category: categoryList[selectedIndex],
-      ),
-    );
+  clearFields() {
     titleCont.clear();
     noteCont.clear();
     update();
@@ -62,14 +69,7 @@ class HomeController extends GetxController {
     update();
   }
 
-  Future addNotes(
-      String myNote, String category, String title, String image) async {
-    final note = Note()
-      ..note = myNote
-      ..category = category
-      ..title = title
-      ..image = image;
-    final box = Boxes.getNotes();
-    box.add(note);
+  Future addNotestoLocalDb(Note note) async {
+    box!.add(note);
   }
 }

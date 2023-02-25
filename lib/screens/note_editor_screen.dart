@@ -39,7 +39,7 @@ class NoteEditorScreen extends StatelessWidget {
                 height: 30,
                 width: double.infinity,
                 child: ListView.builder(
-                  itemCount: h.categoryList.length,
+                  itemCount: AppConstants.categoryList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -51,7 +51,7 @@ class NoteEditorScreen extends StatelessWidget {
                           h.changeIndex(index);
                         },
                         child: Text(
-                          h.categoryList[index],
+                          AppConstants.categoryList[index],
                           style: TextStyle(
                             color: index == h.selectedIndex
                                 ? Colors.red

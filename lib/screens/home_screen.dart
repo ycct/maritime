@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maritime/controllers/home_controller.dart';
-import 'package:maritime/models/note_model.dart';
-import 'package:maritime/screens/note_detail_screen.dart';
 import 'package:maritime/screens/note_editor_screen.dart';
 import 'package:maritime/utilities/constants.dart';
 import 'package:maritime/utilities/extentions.dart';
 import 'package:maritime/utilities/fonts.dart';
 import 'package:maritime/widgets/category_cards.dart';
-import 'package:maritime/widgets/note_card.dart';
+import 'package:maritime/widgets/grid_view.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -29,47 +27,63 @@ class HomeScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: context.primaryColor,
               elevation: 0,
+              title: SizedBox(
+                width: 100,
+                height: 40,
+                child: Image.asset(AppConstants.logo),
+              ),
             ),
             body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: 60,
+                  height: 40,
                   width: double.infinity,
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    itemCount: h.categoryListAll.length,
+                    itemCount: AppConstants.categoryListAll.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
                           pageController.jumpToPage(index);
                         },
-                        child: CategoryCards(
-                          title: h.categoryListAll[index],
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: CategoryCards(
+                            title: AppConstants.categoryListAll[index],
+                          ),
                         ),
                       );
                     },
                   ),
                 ),
-                Text(
-                  "Your recent Notes",
-                  style: customFont20.copyWith(
-                    color: context.dialogBackgroundColor,
+                context.sizedBoxHeightExtraSmall,
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppConstants.defaultPadding,
+                  ),
+                  child: Text(
+                    "Your recent Notes",
+                    style: customFont20.copyWith(
+                      color: context.dialogBackgroundColor,
+                    ),
                   ),
                 ),
+                context.sizedBoxHeightExtraSmall,
                 Expanded(
                   child: PageView(
                     controller: pageController,
                     children: [
-                      HomeView(
+                      CustomGridView(
                         list: h.noteListAll,
                       ),
-                      HomeView(
+                      CustomGridView(
                         list: h.noteListFinance,
                       ),
-                      HomeView(
+                      CustomGridView(
                         list: h.noteListPersonal,
                       ),
-                      HomeView(
+                      CustomGridView(
                         list: h.noteListShopping,
                       ),
                     ],
@@ -79,47 +93,5 @@ class HomeScreen extends StatelessWidget {
             ),
           );
         });
-  }
-}
-
-class HomeView extends StatelessWidget {
-  final List<Note> list;
-
-  const HomeView({
-    Key? key,
-    required this.list,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.defaultPadding,
-      ),
-      child: GridView.builder(
-        shrinkWrap: true,
-        itemCount: list.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 1,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-        ),
-        itemBuilder: (BuildContext context, int index) {
-          return NoteCard(
-            onTap: () {
-              Get.to(
-                () => NoteDetailScreen(
-                  note: list[index],
-                ),
-              );
-            },
-            title: list[index].title!,
-            content: list[index].note!,
-            category: list[index].category!,
-          );
-        },
-      ),
-    );
   }
 }
