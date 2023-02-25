@@ -36,18 +36,30 @@ class HomeController extends GetxController {
     update();
   }
 
-  saveEditedNoteToLocalDb(Note note){
+  saveEditedNoteToLocalDb(Note note) {
     note
-    ..category = AppConstants.categoryList[selectedCategoryIndex]
-    ..note = noteCont.text
-    ..image = ""
-    ..title = titleCont.text;
+      ..category = AppConstants.categoryList[selectedCategoryIndex]
+      ..note = noteCont.text
+      ..image = ""
+      ..title = titleCont.text;
     note.save();
   }
 
   editNoteFirst(Note note) {
     noteCont.text = note.note!;
     titleCont.text = note.title!;
+  }
+
+  deleteNote(Note note) {
+    noteListAll.remove(note);
+    if (note.category == AppConstants.categoryList[0]) {
+      noteListFinance.remove(note);
+    } else if (note.category == AppConstants.categoryList[1]) {
+      noteListPersonal.remove(note);
+    } else {
+      noteListShopping.remove(note);
+    }
+    update();
   }
 
   editNote(Note note) {
@@ -98,5 +110,9 @@ class HomeController extends GetxController {
 
   Future addNotestoLocalDb(Note note) async {
     box!.add(note);
+  }
+
+  deleteNotesFromLocalDb(Note note) {
+    note.delete();
   }
 }

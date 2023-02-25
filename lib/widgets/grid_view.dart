@@ -16,6 +16,7 @@ class CustomGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppConstants.defaultPadding,
@@ -31,9 +32,13 @@ class CustomGridView extends StatelessWidget {
         ),
         itemBuilder: (BuildContext context, int index) {
           return NoteCard(
-            color: AppConstants.cardsColor[0],
+            onDeleteTap: () {
+              controller.deleteNotesFromLocalDb(list[index]);
+              controller.deleteNote(list[index]);
+            },
+            color: AppConstants.cardsColor[1],
             onTap: () {
-              Get.find<HomeController>().clearFields();
+              controller.clearFields();
               Get.to(
                 () => NoteDetailScreen(
                   note: list[index],

@@ -5,6 +5,7 @@ import 'package:maritime/utilities/fonts.dart';
 
 class NoteCard extends StatelessWidget {
   final VoidCallback onTap;
+  final VoidCallback onDeleteTap;
   final String title;
   final String content;
   final String category;
@@ -17,45 +18,63 @@ class NoteCard extends StatelessWidget {
     required this.content,
     required this.category,
     required this.color,
+    required this.onDeleteTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(AppConstants.smallPadding),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(
-            AppConstants.smallPadding,
-          ),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              title,
-              style: customFont20Bold,
-              overflow: TextOverflow.ellipsis,
-            ),
-            context.sizedBoxHeightUltraSmall,
-            Text(
-              category,
-              style: customFont12LightBold.copyWith(
-                color: context.errorColor,
+      child: Stack(
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        children: [
+          Container(
+            clipBehavior: Clip.antiAliasWithSaveLayer,
+            padding: const EdgeInsets.all(AppConstants.smallPadding),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(
+                AppConstants.smallPadding,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
-            context.sizedBoxHeightUltraSmall,
-            Text(
-              content,
-              style: customFont16,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  title,
+                  style: customFont20Bold,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                context.sizedBoxHeightUltraSmall,
+                Text(
+                  category,
+                  style: customFont12LightBold,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                context.sizedBoxHeightUltraSmall,
+                Text(
+                  content,
+                  style: customFont16,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            right: 10,
+            bottom: 10,
+            child: GestureDetector(
+              onTap: onDeleteTap,
+              child: CircleAvatar(
+                radius: 15,
+                backgroundColor: context.dialogBackgroundColor,
+                child: Icon(Icons.delete_outline,
+                    size: 20, color: context.primaryColor),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
