@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(
             floatingActionButton: FloatingActionButton.extended(
                 onPressed: () {
+                  h.clearFields();
                   Get.to(() => const NoteEditorScreen());
                 },
                 label: const Text("Add Note"),

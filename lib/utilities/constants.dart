@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class AppConstants {
   //Paddings
   static const extraLargePadding = 40.0;
@@ -23,10 +25,21 @@ class AppConstants {
   static const logo = "assets/images/logo.png";
 
   //Lists
-  static const categoryList = ["Financial Notes", "Personal Notes", "Shopping Notes"];
+  static const categoryList = [
+    "Financial Notes",
+    "Personal Notes",
+    "Shopping Notes",
+  ];
   static const categoryListAll = [
     "All Notes",
     "Financial Notes", "Personal Notes", "Shopping Notes"
+  ];
+
+  //Colors
+  static List<Color> cardsColor = [
+    Colors.red.shade100,
+    Colors.orange.shade100,
+    Colors.blue.shade100,
   ];
 }
 

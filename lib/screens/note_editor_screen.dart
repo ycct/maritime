@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maritime/controllers/home_controller.dart';
 import 'package:maritime/utilities/constants.dart';
-import 'package:maritime/utilities/theme.dart';
 import 'package:maritime/widgets/textfield.dart';
 
 class NoteEditorScreen extends StatelessWidget {
@@ -24,10 +23,10 @@ class NoteEditorScreen extends StatelessWidget {
             "Add New Note",
             style: TextStyle(color: Colors.black),
           ),
-          backgroundColor: CustomThemeData.cardsColor[2],
+          backgroundColor: AppConstants.cardsColor[2],
           elevation: 0,
         ),
-        backgroundColor: CustomThemeData.cardsColor[2],
+        backgroundColor: AppConstants.cardsColor[2],
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.defaultPadding,
@@ -53,7 +52,7 @@ class NoteEditorScreen extends StatelessWidget {
                         child: Text(
                           AppConstants.categoryList[index],
                           style: TextStyle(
-                            color: index == h.selectedIndex
+                            color: index == h.selectedCategoryIndex
                                 ? Colors.red
                                 : Colors.black,
                           ),

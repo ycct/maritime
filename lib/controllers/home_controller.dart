@@ -8,13 +8,14 @@ import 'package:maritime/utilities/constants.dart';
 enum CategoryEnum { finance, personal, shopping }
 
 class HomeController extends GetxController {
-  int selectedIndex = 0;
+  int selectedCategoryIndex = 0;
 
   TextEditingController noteCont = TextEditingController();
   TextEditingController titleCont = TextEditingController();
   TextEditingController imageCont = TextEditingController();
 
   Box<Note>? box;
+  bool textEditingEnable = false;
 
   List<Note> noteListAll = [];
   List<List<Note>> bigData = [];
@@ -30,13 +31,39 @@ class HomeController extends GetxController {
     categorizeList();
   }
 
+  changeEditingValue() {
+    textEditingEnable = !textEditingEnable;
+    update();
+  }
+
+  saveEditedNoteToLocalDb(Note note){
+    note
+    ..category = AppConstants.categoryList[selectedCategoryIndex]
+    ..note = noteCont.text
+    ..image = ""
+    ..title = titleCont.text;
+    note.save();
+  }
+
+  editNoteFirst(Note note) {
+    noteCont.text = note.note!;
+    titleCont.text = note.title!;
+  }
+
+  editNote(Note note) {
+    note
+      ..note = noteCont.text
+      ..title = titleCont.text;
+    update();
+  }
+
   saveNoteToAll() {
     Note note = Note()
-      ..category = AppConstants.categoryList[selectedIndex]
+      ..category = AppConstants.categoryList[selectedCategoryIndex]
       ..note = noteCont.text
       ..image = ""
       ..title = titleCont.text;
-    bigData[selectedIndex].add(note);
+    bigData[selectedCategoryIndex].add(note);
     noteListAll.add(note);
     addNotestoLocalDb(note);
     update();
@@ -65,7 +92,7 @@ class HomeController extends GetxController {
   }
 
   changeIndex(int value) {
-    selectedIndex = value;
+    selectedCategoryIndex = value;
     update();
   }
 

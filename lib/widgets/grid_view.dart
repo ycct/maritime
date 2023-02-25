@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maritime/controllers/home_controller.dart';
 import 'package:maritime/models/note_model.dart';
 import 'package:maritime/screens/note_detail_screen.dart';
 import 'package:maritime/utilities/constants.dart';
@@ -30,7 +31,9 @@ class CustomGridView extends StatelessWidget {
         ),
         itemBuilder: (BuildContext context, int index) {
           return NoteCard(
+            color: AppConstants.cardsColor[0],
             onTap: () {
+              Get.find<HomeController>().clearFields();
               Get.to(
                 () => NoteDetailScreen(
                   note: list[index],

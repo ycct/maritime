@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:maritime/utilities/constants.dart';
 import 'package:maritime/utilities/extentions.dart';
 import 'package:maritime/utilities/fonts.dart';
-import 'package:maritime/utilities/theme.dart';
 
 class NoteCard extends StatelessWidget {
   final VoidCallback onTap;
   final String title;
   final String content;
   final String category;
-
-  // final Color color;
+  final Color color;
 
   const NoteCard({
     Key? key,
@@ -18,6 +16,7 @@ class NoteCard extends StatelessWidget {
     required this.title,
     required this.content,
     required this.category,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -27,7 +26,7 @@ class NoteCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(AppConstants.smallPadding),
         decoration: BoxDecoration(
-          color: CustomThemeData.cardsColor[1],
+          color: color,
           borderRadius: BorderRadius.circular(
             AppConstants.smallPadding,
           ),
@@ -43,7 +42,9 @@ class NoteCard extends StatelessWidget {
             context.sizedBoxHeightUltraSmall,
             Text(
               category,
-              style: customFont14,
+              style: customFont12LightBold.copyWith(
+                color: context.errorColor,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
             context.sizedBoxHeightUltraSmall,
