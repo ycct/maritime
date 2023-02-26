@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maritime/controllers/home_controller.dart';
 import 'package:maritime/models/note_model.dart';
+import 'package:maritime/services/notification_services.dart';
 import 'package:maritime/utilities/constants.dart';
 import 'package:maritime/utilities/extentions.dart';
 import 'package:maritime/utilities/theme.dart';
+import 'package:maritime/widgets/snackbar.dart';
 import '../widgets/textfield.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -12,7 +14,8 @@ class NoteDetailScreen extends StatelessWidget {
   final Note note;
   final Color color;
 
-  const NoteDetailScreen({Key? key, required this.note, required this.color}) : super(key: key);
+  const NoteDetailScreen({Key? key, required this.note, required this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +30,18 @@ class NoteDetailScreen extends StatelessWidget {
               h.editNote(note);
               h.saveEditedNoteToLocalDb(note);
             },
-            label: const Text("Save"),
+            label: Text("save".tr),
             icon: const Icon(Icons.save),
           ),
         ),
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Note", style: TextStyle(color: context.primaryColor)),
+          title: Text(
+            "note".tr,
+            style: TextStyle(
+              color: context.primaryColor,
+            ),
+          ),
           leading: InkWell(
             onTap: Get.back,
             child: Icon(
@@ -52,6 +60,23 @@ class NoteDetailScreen extends StatelessWidget {
                 Icons.edit_note,
                 size: 26,
                 color: context.primaryColor,
+              ),
+            ),
+            context.sizedBoxWidthSmall,
+            InkWell(
+              onTap: () async {
+                chooseTime(h).then(
+                  (value) => NotificationService().showNotification(
+                      1,
+                      "${"leftTime".tr} - ${note.title!}",
+                      note.note!,
+                      h.selectedTimeInt),
+                );
+              },
+              child: Icon(
+                Icons.lock_clock,
+                size: 20,
+                color: CustomThemeData.blackColor,
               ),
             ),
             context.sizedBoxWidthSmall,
@@ -95,5 +120,29 @@ class NoteDetailScreen extends StatelessWidget {
         ),
       );
     });
+  }
+
+  Future chooseTime(HomeController h) async {
+    TimeOfDay? pickedTime = await showTimePicker(
+        context: Get.context!,
+        initialTime: h.selectedTime,
+        builder: (context, child) {
+          return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              alwaysUse24HourFormat: true,
+            ),
+            child: child!,
+          );
+        },
+        helpText: "enterTime".tr,
+        cancelText: "cancel".tr,
+        minuteLabelText: "second".tr,
+        hourLabelText: "minute".tr,
+        initialEntryMode: TimePickerEntryMode.input);
+
+    if (pickedTime != null && pickedTime != h.selectedTime) {
+      h.timeSetter(pickedTime);
+      CustomSnackBar.showSuccessMessage("reminderSuccess.".tr);
+    }
   }
 }

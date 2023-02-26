@@ -1,0 +1,50 @@
+import 'package:get/get.dart';
+
+class Translation extends Translations {
+  @override
+  Map<String, Map<String, String>> get keys => {
+        "en_US": {
+          "addNote": "Add Note",
+          "recentNotes": "Your recent Notes",
+          "save": "Save",
+          "leftTime": "5 Minutes Left",
+          "enterTime": "Enter Time",
+          "cancel": "Cancel",
+          "second": "Second",
+          "minute": "Minute",
+          "reminderSuccess": "Reminder Created.",
+          "enterNote": "Enter your note here",
+          "noteTitle": "Enter your note title here",
+          "success": "Success",
+          "error": "Error",
+          "note": "Note",
+          "info": "Info",
+          "unknownError": "Unknown Error",
+          "allNotes": "All Notes",
+          "finance": "Financial Notes",
+          "shopping": "Shopping Notes",
+          "personal": "Personal Notes",
+        },
+        "tr_TR": {
+          "addNote": "Not Ekle",
+          "recentNotes": "Son Notların",
+          "save": "Kaydet",
+          "leftTime": "5 Dakika Kaldı",
+          "enterTime": "Zaman Ayarla",
+          "cancel": "Iptal",
+          "second": "Saniye",
+          "minute": "Dakika",
+          "reminderSuccess": "Hatırlatıcı Oluşturuldu.",
+          "enterNote": "Notunu buraya gir",
+          "noteTitle": "Not Başlık",
+          "success": "Başarılı",
+          "error": "Hata",
+          "info": "Bilgi",
+          "unknownError": "Bilinmeyen Hata",
+          "allNotes": "Bütün Notlar",
+          "finance": "Finansal Notlar",
+          "shopping": "Alışveriş Notları",
+          "personal": "Kişisel Notlar",
+        },
+      };
+}

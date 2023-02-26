@@ -30,22 +30,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder(
         init: HomeController(),
         builder: (HomeController h) {
           return Scaffold(
             floatingActionButton: FloatingActionButton.extended(
-                onPressed: () {
-                  h.clearFields();
-                  Get.to(() => const NoteEditorScreen());
-                },
-                label: Text(
-                  "Add Note",
-                  style: customFont14LightBold.copyWith(
-                    color: context.primaryColor,
-                  ),
+              onPressed: () {
+                h.clearFields();
+                Get.to(() => const NoteEditorScreen());
+              },
+              label: Text(
+                "addNote".tr,
+                style: customFont14LightBold.copyWith(
+                  color: context.primaryColor,
                 ),
-                backgroundColor: AppConstants.cardsColor[2]),
+              ),
+              backgroundColor: AppConstants.cardsColor[2],
+            ),
             appBar: AppBar(
               backgroundColor: context.primaryColor,
               elevation: 0,
@@ -87,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     horizontal: AppConstants.defaultPadding,
                   ),
                   child: Text(
-                    "Your recent Notes",
+                    "recentNotes".tr,
                     style: customFont20.copyWith(
                       color: context.dialogBackgroundColor,
                     ),

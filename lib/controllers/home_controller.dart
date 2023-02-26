@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:maritime/models/note_model.dart';
@@ -8,6 +8,9 @@ import 'package:maritime/utilities/constants.dart';
 enum CategoryEnum { finance, personal, shopping }
 
 class HomeController extends GetxController {
+  var selectedTime = const TimeOfDay(hour: 00, minute: 00);
+  int selectedTimeInt = 0;
+
   int selectedCategoryIndex = 0;
   int selectedCategoryIndexAll = 0;
 
@@ -37,9 +40,16 @@ class HomeController extends GetxController {
     update();
   }
 
+  timeSetter(TimeOfDay pickedTime) {
+    selectedTime = pickedTime;
+    selectedTimeInt = (selectedTime.hour * 60 + selectedTime.minute) > 300
+        ? (selectedTime.hour * 60 + selectedTime.minute) - 300
+        : (selectedTime.hour * 60 + selectedTime.minute) - 0;
+  }
+
   saveEditedNoteToLocalDb(Note note) {
     note
-      ..category = AppConstants.categoryList[selectedCategoryIndex]
+      ..category = note.category
       ..note = noteCont.text
       ..image = ""
       ..title = titleCont.text;

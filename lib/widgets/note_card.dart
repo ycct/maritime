@@ -26,10 +26,9 @@ class NoteCard extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Stack(
-        clipBehavior: Clip.antiAliasWithSaveLayer,
+        clipBehavior: Clip.none,
         children: [
           Container(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
             padding: const EdgeInsets.all(AppConstants.smallPadding),
             decoration: BoxDecoration(
               color: color,
@@ -62,12 +61,12 @@ class NoteCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: 10,
-            bottom: 10,
+            right: -10,
+            top: -10,
             child: GestureDetector(
               onTap: onDeleteTap,
               child: CircleAvatar(
-                radius: 13,
+                radius: 14,
                 backgroundColor: context.dialogBackgroundColor,
                 child: Icon(Icons.delete_outline,
                     size: 18, color: context.primaryColor),

@@ -19,8 +19,8 @@ class CustomGridView extends StatelessWidget {
     final controller = Get.find<HomeController>();
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppConstants.defaultPadding,
-      ),
+          horizontal: AppConstants.defaultPadding,
+          vertical: AppConstants.smallPadding),
       child: GridView.builder(
         shrinkWrap: true,
         itemCount: list.length,

@@ -13,15 +13,18 @@ class NoteEditorScreen extends StatelessWidget {
     return GetBuilder(builder: (HomeController h) {
       return Scaffold(
         floatingActionButton: FloatingActionButton(
+          backgroundColor: context.primaryColor,
           onPressed: () {
             h.assignLists();
             h.saveNoteToAll();
+            Get.back();
           },
+          child: const Icon(Icons.add),
         ),
         appBar: AppBar(
-          iconTheme:  IconThemeData(color: context.primaryColor),
-          title:  Text(
-            "Add New Note",
+          iconTheme: IconThemeData(color: context.primaryColor),
+          title: Text(
+            "addNote".tr,
             style: TextStyle(color: context.primaryColor),
           ),
           backgroundColor: AppConstants.cardsColor[h.selectedCategoryIndex],
@@ -64,12 +67,12 @@ class NoteEditorScreen extends StatelessWidget {
                 ),
               ),
               CustomTextField(
-                title: 'Note Title',
+                title: 'noteTitle'.tr,
                 fontSize: 20,
                 controller: h.titleCont,
               ),
               CustomTextField(
-                title: 'Enter your note here',
+                title: 'enterNote'.tr,
                 fontSize: 14,
                 controller: h.noteCont,
               ),
