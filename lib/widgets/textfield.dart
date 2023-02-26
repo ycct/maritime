@@ -27,12 +27,13 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hoverColor: context.primaryColor,
-          border: InputBorder.none,
-          hintText: title,
-          hintStyle: TextStyle(
-            fontSize: fontSize,
-            color: Colors.black,
-          )),
+        border: InputBorder.none,
+        hintText: title,
+        hintStyle: TextStyle(
+          fontSize: fontSize,
+          color: Colors.black,
+        ),
+      ),
     );
   }
 }

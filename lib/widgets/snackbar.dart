@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:maritime/utilities/constants.dart';
 import '../utilities/alert_enum.dart';
 
 class CustomSnackBar {
   static const SnackPosition _snackPosition = SnackPosition.TOP;
   static const EdgeInsets _margin = EdgeInsets.symmetric(
-    vertical: 20,
-    horizontal: 10,
+    vertical: AppConstants.defaultPadding,
+    horizontal: AppConstants.extraSmallPadding,
   );
   static const Duration _snackBarDuration = Duration(milliseconds: 1500);
   static const double _width = double.infinity;

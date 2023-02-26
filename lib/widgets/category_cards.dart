@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maritime/utilities/constants.dart';
 import 'package:maritime/utilities/extentions.dart';
 
 class CategoryCards extends StatelessWidget {
@@ -23,7 +24,9 @@ class CategoryCards extends StatelessWidget {
       ),
       child: Center(
         child: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(
+            AppConstants.extraSmallPadding,
+          ),
           child: Text(
             title,
             style: TextStyle(

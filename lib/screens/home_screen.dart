@@ -19,6 +19,94 @@ class _HomeScreenState extends State<HomeScreen> {
   final PageController pageController = PageController();
 
   @override
+  Widget build(BuildContext context) {
+    double defualtHeight = 40;
+    return GetBuilder(
+      init: HomeController(),
+      builder: (HomeController h) {
+        return Scaffold(
+          floatingActionButton: FloatingActionButton.extended(
+            onPressed: () {
+              h.clearFields();
+              Get.to(
+                () => const NoteEditorScreen(),
+              );
+            },
+            label: Text(
+              "addNote".tr,
+              style: customFont14LightBold.copyWith(
+                color: context.primaryColor,
+              ),
+            ),
+            backgroundColor: AppConstants.cardsColor[2],
+          ),
+          appBar: AppBar(
+            backgroundColor: context.primaryColor,
+            elevation: 0,
+            title: SizedBox(
+              width: defualtHeight*2.5,
+              height: defualtHeight,
+              child: Image.asset(AppConstants.logo),
+            ),
+          ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: defualtHeight,
+                width: double.infinity,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: AppConstants.categoryListAll.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        pageController.jumpToPage(index);
+                        h.changeIndexAll(index);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          right: AppConstants.extraSmallPadding,
+                        ),
+                        child: CategoryCards(
+                          isSelected: h.selectedCategoryIndexAll == index,
+                          title: AppConstants.categoryListAll[index],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              context.sizedBoxHeightExtraSmall,
+              const TitleText(title: "recentNotes"),
+              context.sizedBoxHeightExtraSmall,
+              Expanded(
+                child: PageView(
+                  controller: pageController,
+                  children: [
+                    CustomGridView(
+                      list: h.noteListAll,
+                    ),
+                    CustomGridView(
+                      list: h.noteListFinance,
+                    ),
+                    CustomGridView(
+                      list: h.noteListPersonal,
+                    ),
+                    CustomGridView(
+                      list: h.noteListShopping,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  @override
   void initState() {
     super.initState();
     pageController.addListener(() {
@@ -27,97 +115,28 @@ class _HomeScreenState extends State<HomeScreen> {
       );
     });
   }
+}
+
+class TitleText extends StatelessWidget {
+  final String title;
+
+  const TitleText({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    return GetBuilder(
-        init: HomeController(),
-        builder: (HomeController h) {
-          return Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () {
-                h.clearFields();
-                Get.to(() => const NoteEditorScreen());
-              },
-              label: Text(
-                "addNote".tr,
-                style: customFont14LightBold.copyWith(
-                  color: context.primaryColor,
-                ),
-              ),
-              backgroundColor: AppConstants.cardsColor[2],
-            ),
-            appBar: AppBar(
-              backgroundColor: context.primaryColor,
-              elevation: 0,
-              title: SizedBox(
-                width: 100,
-                height: 40,
-                child: Image.asset(AppConstants.logo),
-              ),
-            ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: AppConstants.categoryListAll.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          pageController.jumpToPage(index);
-                          h.changeIndexAll(index);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: CategoryCards(
-                            isSelected: h.selectedCategoryIndexAll == index,
-                            title: AppConstants.categoryListAll[index],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                context.sizedBoxHeightExtraSmall,
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppConstants.defaultPadding,
-                  ),
-                  child: Text(
-                    "recentNotes".tr,
-                    style: customFont20.copyWith(
-                      color: context.dialogBackgroundColor,
-                    ),
-                  ),
-                ),
-                context.sizedBoxHeightExtraSmall,
-                Expanded(
-                  child: PageView(
-                    controller: pageController,
-                    children: [
-                      CustomGridView(
-                        list: h.noteListAll,
-                      ),
-                      CustomGridView(
-                        list: h.noteListFinance,
-                      ),
-                      CustomGridView(
-                        list: h.noteListPersonal,
-                      ),
-                      CustomGridView(
-                        list: h.noteListShopping,
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          );
-        });
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppConstants.defaultPadding,
+      ),
+      child: Text(
+        title.tr,
+        style: customFont20.copyWith(
+          color: context.dialogBackgroundColor,
+        ),
+      ),
+    );
   }
 }

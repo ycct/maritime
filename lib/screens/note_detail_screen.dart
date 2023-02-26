@@ -20,6 +20,7 @@ class NoteDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(builder: (HomeController h) {
+      double iconSize = 20;
       return Scaffold(
         floatingActionButton: Visibility(
           visible: h.textEditingEnable,
@@ -46,7 +47,7 @@ class NoteDetailScreen extends StatelessWidget {
             onTap: Get.back,
             child: Icon(
               Icons.arrow_back_ios,
-              size: 20,
+              size: iconSize,
               color: context.primaryColor,
             ),
           ),
@@ -58,24 +59,18 @@ class NoteDetailScreen extends StatelessWidget {
               },
               child: Icon(
                 Icons.edit_note,
-                size: 26,
+                size: iconSize+6,
                 color: context.primaryColor,
               ),
             ),
             context.sizedBoxWidthSmall,
             InkWell(
               onTap: () async {
-                chooseTime(h).then(
-                  (value) => NotificationService().showNotification(
-                      1,
-                      "${"leftTime".tr} - ${note.title!}",
-                      note.note!,
-                      h.selectedTimeInt),
-                );
+                setReminderEvent(h);
               },
               child: Icon(
                 Icons.lock_clock,
-                size: 20,
+                size: iconSize,
                 color: CustomThemeData.blackColor,
               ),
             ),
@@ -86,7 +81,7 @@ class NoteDetailScreen extends StatelessWidget {
               },
               child: Icon(
                 Icons.share,
-                size: 20,
+                size: iconSize,
                 color: CustomThemeData.blackColor,
               ),
             ),
@@ -120,6 +115,13 @@ class NoteDetailScreen extends StatelessWidget {
         ),
       );
     });
+  }
+
+  setReminderEvent(HomeController h) {
+    chooseTime(h).then(
+      (value) => NotificationService().showNotification(1,
+          "${"leftTime".tr} - ${note.title!}", note.note!, h.selectedTimeInt),
+    );
   }
 
   Future chooseTime(HomeController h) async {

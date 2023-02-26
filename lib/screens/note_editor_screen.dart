@@ -11,6 +11,7 @@ class NoteEditorScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder(builder: (HomeController h) {
+      Color bgColor = AppConstants.cardsColor[h.selectedCategoryIndex];
       return Scaffold(
         floatingActionButton: FloatingActionButton(
           backgroundColor: context.primaryColor,
@@ -22,15 +23,19 @@ class NoteEditorScreen extends StatelessWidget {
           child: const Icon(Icons.add),
         ),
         appBar: AppBar(
-          iconTheme: IconThemeData(color: context.primaryColor),
+          iconTheme: IconThemeData(
+            color: context.primaryColor,
+          ),
           title: Text(
             "addNote".tr,
-            style: TextStyle(color: context.primaryColor),
+            style: TextStyle(
+              color: context.primaryColor,
+            ),
           ),
-          backgroundColor: AppConstants.cardsColor[h.selectedCategoryIndex],
+          backgroundColor: bgColor,
           elevation: 0,
         ),
-        backgroundColor: AppConstants.cardsColor[h.selectedCategoryIndex],
+        backgroundColor: bgColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.defaultPadding,
