@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:maritime/controllers/home_controller.dart';
 import 'package:maritime/utilities/constants.dart';
+import 'package:maritime/utilities/extentions.dart';
 import 'package:maritime/widgets/textfield.dart';
 
 class NoteEditorScreen extends StatelessWidget {
@@ -18,15 +19,15 @@ class NoteEditorScreen extends StatelessWidget {
           },
         ),
         appBar: AppBar(
-          iconTheme: const IconThemeData(color: Colors.black),
-          title: const Text(
+          iconTheme:  IconThemeData(color: context.primaryColor),
+          title:  Text(
             "Add New Note",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: context.primaryColor),
           ),
-          backgroundColor: AppConstants.cardsColor[2],
+          backgroundColor: AppConstants.cardsColor[h.selectedCategoryIndex],
           elevation: 0,
         ),
-        backgroundColor: AppConstants.cardsColor[2],
+        backgroundColor: AppConstants.cardsColor[h.selectedCategoryIndex],
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.defaultPadding,
@@ -53,8 +54,8 @@ class NoteEditorScreen extends StatelessWidget {
                           AppConstants.categoryList[index],
                           style: TextStyle(
                             color: index == h.selectedCategoryIndex
-                                ? Colors.red
-                                : Colors.black,
+                                ? context.errorColor
+                                : context.primaryColor,
                           ),
                         ),
                       ),
@@ -68,7 +69,7 @@ class NoteEditorScreen extends StatelessWidget {
                 controller: h.titleCont,
               ),
               CustomTextField(
-                title: 'Note Title',
+                title: 'Enter your note here',
                 fontSize: 14,
                 controller: h.noteCont,
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maritime/utilities/extentions.dart';
 
 class CategoryCards extends StatelessWidget {
   final String title;
@@ -18,7 +19,7 @@ class CategoryCards extends StatelessWidget {
         borderRadius: BorderRadius.circular(
           50,
         ),
-        color: isSelected ? Colors.blue.shade100 : Colors.orange.shade100,
+        color: isSelected ? Colors.blue.shade200 : Colors.orange.shade100,
       ),
       child: Center(
         child: Padding(
@@ -27,7 +28,10 @@ class CategoryCards extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 14,
-              color: isSelected ? Colors.white : Colors.black,
+              fontWeight: FontWeight.w500,
+              color: isSelected
+                  ? context.dialogBackgroundColor
+                  : context.primaryColor,
             ),
           ),
         ),

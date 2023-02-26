@@ -36,11 +36,14 @@ class CustomGridView extends StatelessWidget {
               controller.deleteNotesFromLocalDb(list[index]);
               controller.deleteNote(list[index]);
             },
-            color: AppConstants.cardsColor[1],
+            color: AppConstants.cardsColor[
+                AppConstants.categoryList.indexOf(list[index].category!)],
             onTap: () {
               controller.clearFields();
               Get.to(
                 () => NoteDetailScreen(
+                  color: AppConstants.cardsColor[
+                      AppConstants.categoryList.indexOf(list[index].category!)],
                   note: list[index],
                 ),
               );

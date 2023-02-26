@@ -8,12 +8,28 @@ import 'package:maritime/utilities/fonts.dart';
 import 'package:maritime/widgets/category_cards.dart';
 import 'package:maritime/widgets/grid_view.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final PageController pageController = PageController();
+
+  @override
+  void initState() {
+    super.initState();
+    pageController.addListener(() {
+      Get.find<HomeController>().changeIndexAll(
+        pageController.page!.toInt(),
+      );
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final PageController pageController = PageController();
     return GetBuilder(
         init: HomeController(),
         builder: (HomeController h) {
@@ -23,8 +39,13 @@ class HomeScreen extends StatelessWidget {
                   h.clearFields();
                   Get.to(() => const NoteEditorScreen());
                 },
-                label: const Text("Add Note"),
-                backgroundColor: context.primaryColorDark),
+                label: Text(
+                  "Add Note",
+                  style: customFont14LightBold.copyWith(
+                    color: context.primaryColor,
+                  ),
+                ),
+                backgroundColor: AppConstants.cardsColor[2]),
             appBar: AppBar(
               backgroundColor: context.primaryColor,
               elevation: 0,
@@ -47,10 +68,12 @@ class HomeScreen extends StatelessWidget {
                       return InkWell(
                         onTap: () {
                           pageController.jumpToPage(index);
+                          h.changeIndexAll(index);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(right: 10.0),
                           child: CategoryCards(
+                            isSelected: h.selectedCategoryIndexAll == index,
                             title: AppConstants.categoryListAll[index],
                           ),
                         ),

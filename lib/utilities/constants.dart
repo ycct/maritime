@@ -40,6 +40,7 @@ class AppConstants {
     Colors.red.shade100,
     Colors.orange.shade100,
     Colors.blue.shade100,
+    Colors.greenAccent.shade100
   ];
 }
 

@@ -6,11 +6,13 @@ import 'package:maritime/utilities/constants.dart';
 import 'package:maritime/utilities/extentions.dart';
 import 'package:maritime/utilities/theme.dart';
 import '../widgets/textfield.dart';
+import 'package:share_plus/share_plus.dart';
 
 class NoteDetailScreen extends StatelessWidget {
   final Note note;
+  final Color color;
 
-  const NoteDetailScreen({Key? key, required this.note}) : super(key: key);
+  const NoteDetailScreen({Key? key, required this.note, required this.color}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +33,13 @@ class NoteDetailScreen extends StatelessWidget {
         ),
         appBar: AppBar(
           centerTitle: true,
-          title: Text("Note",style: TextStyle(color: context.primaryColor)),
+          title: Text("Note", style: TextStyle(color: context.primaryColor)),
           leading: InkWell(
             onTap: Get.back,
             child: Icon(
               Icons.arrow_back_ios,
               size: 20,
-              color: CustomThemeData.blackColor,
+              color: context.primaryColor,
             ),
           ),
           actions: [
@@ -49,15 +51,26 @@ class NoteDetailScreen extends StatelessWidget {
               child: Icon(
                 Icons.edit_note,
                 size: 26,
+                color: context.primaryColor,
+              ),
+            ),
+            context.sizedBoxWidthSmall,
+            InkWell(
+              onTap: () async {
+                await Share.share(note.note!);
+              },
+              child: Icon(
+                Icons.share,
+                size: 20,
                 color: CustomThemeData.blackColor,
               ),
             ),
             context.sizedBoxWidthSmall,
           ],
-          backgroundColor: AppConstants.cardsColor[1],
+          backgroundColor: color,
           elevation: 0,
         ),
-        backgroundColor: AppConstants.cardsColor[1],
+        backgroundColor: color,
         body: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: AppConstants.defaultPadding,

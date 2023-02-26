@@ -67,10 +67,10 @@ class NoteCard extends StatelessWidget {
             child: GestureDetector(
               onTap: onDeleteTap,
               child: CircleAvatar(
-                radius: 15,
+                radius: 13,
                 backgroundColor: context.dialogBackgroundColor,
                 child: Icon(Icons.delete_outline,
-                    size: 20, color: context.primaryColor),
+                    size: 18, color: context.primaryColor),
               ),
             ),
           ),

@@ -9,6 +9,7 @@ enum CategoryEnum { finance, personal, shopping }
 
 class HomeController extends GetxController {
   int selectedCategoryIndex = 0;
+  int selectedCategoryIndexAll = 0;
 
   TextEditingController noteCont = TextEditingController();
   TextEditingController titleCont = TextEditingController();
@@ -105,6 +106,10 @@ class HomeController extends GetxController {
 
   changeIndex(int value) {
     selectedCategoryIndex = value;
+    update();
+  }
+  changeIndexAll(int value) {
+    selectedCategoryIndexAll = value;
     update();
   }
 
